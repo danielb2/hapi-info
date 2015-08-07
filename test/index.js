@@ -68,4 +68,35 @@ describe('routes', function () {
         });
     });
 
+    it('prints plugin and server to a different path', function (done) {
+
+        internals.prepareServer({ path: '/foo' }, function (err, server) {
+
+            server.inject('/foo', function (res) {
+
+
+                var result = {
+                    server: {
+                        node: process.version,
+                        hapi: '8.8.1'
+                    },
+                    plugins: [{
+                        name: 'hapi-info',
+                        version: require('./../package.json').version
+                    },
+                    {
+                        name: 'blah',
+                        version: '1.2.3'
+                    },
+                    {
+                        name: 'main',
+                        version: '0.1.1'
+                    }]
+                };
+                expect(res.result).to.deep.equal(result);
+                done();
+            });
+        });
+    });
+
 });
