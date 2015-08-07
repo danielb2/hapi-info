@@ -26,7 +26,7 @@ The following options are available:
 
 # Output example
 
-``` json
+``` javascript
 {
     server: {
         node: 'v0.10.39',
