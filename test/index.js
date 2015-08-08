@@ -47,7 +47,10 @@ describe('routes', function () {
                 var result = {
                     server: {
                         node: process.version,
-                        hapi: '8.8.1'
+                        hapi: '8.8.1',
+                        host: server.info.host,
+                        port: server.info.port,
+                        uri: server.info.uri
                     },
                     plugins: [{
                         name: 'hapi-info',
@@ -78,7 +81,10 @@ describe('routes', function () {
                 var result = {
                     server: {
                         node: process.version,
-                        hapi: '8.8.1'
+                        hapi: '8.8.1',
+                        host: server.info.host,
+                        port: server.info.port,
+                        uri: server.info.uri
                     },
                     plugins: [{
                         name: 'hapi-info',
