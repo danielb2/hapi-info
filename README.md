@@ -30,7 +30,10 @@ The following options are available:
 {
     server: {
         node: 'v0.10.39',
-        hapi: '8.8.1'
+        hapi: '8.8.1',
+        host: 'sanji.local',
+        port: 0,
+        uri: 'http://sanji.local'
     },
     plugins: [
         {
