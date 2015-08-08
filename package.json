@@ -6,6 +6,10 @@
   "scripts": {
     "test": "lab -a code -v -t 100"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielb2/hapi-info"
+  },
   "author": "",
   "license": "ISC",
   "author": "Daniel Bretoi",
