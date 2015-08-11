@@ -1,7 +1,9 @@
+# hapi-info
+
 `hapi-info` is a plugin to display information about the hapi server and the
 plugins it's running.
 
-# Usage
+### Usage
 
 ``` javascript
 var HapiInfo = require('hapi-info');
@@ -17,14 +19,14 @@ server.register({ register: HapiInfo, options: {} }, function (err) {
 });
 ```
 
-# Options
+### Options
 
 The following options are available:
 
 * `path`: The route path where the information is available. Default: `/hapi-info`. Setting path to `null` means a route is not created but the server function is still [exposed].
 
 
-# Output example
+### Output example
 
 ``` javascript
 {
@@ -53,7 +55,7 @@ The following options are available:
 ```
 
 
-# `server.plugins['hapi-info'].info()`
+### `server.plugins['hapi-info'].info()`
 
 The function `server.plugins['hapi-info'].info()` is also [exposed] and
 contains the same information as the endpoint as an object as opposed to json
