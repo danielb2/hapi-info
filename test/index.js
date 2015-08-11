@@ -103,4 +103,20 @@ describe('routes', function () {
             done();
         });
     });
+
+    it('setting path to null doesnt create route, but still exposes info data', function (done) {
+
+        internals.prepareServer({ path: null }, function (err, server) {
+
+            server.inject('/hapi-info', function (res) {
+
+                expect(res.statusCode).to.equal(404);
+                var info = server.plugins['hapi-info'].info();
+                var result = internals.makeResult(server);
+                expect(info).to.deep.equal(result);
+                done();
+            });
+        });
+    });
+
 });
