@@ -11,9 +11,6 @@
     "url": "https://github.com/danielb2/hapi-info"
   },
   "author": "Daniel Bretoi",
-  "contributors": [
-    "Brian Delahunty <brian@briandela.com>"
-  ],
   "license": "ISC",
   "keywords": [
     "hapi",
