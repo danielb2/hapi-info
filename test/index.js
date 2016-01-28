@@ -1,35 +1,33 @@
+'use strict';
 // Load modules
 
-var Code = require('code');
-var Glue = require('glue');
-var Hapi = require('hapi');
-var Lab = require('lab');
+const Code = require('code');
+const Glue = require('glue');
+const Lab = require('lab');
 
 
 // Test shortcuts
 
-var lab = exports.lab = Lab.script();
-var expect = Code.expect;
-var describe = lab.describe;
-var it = lab.test;
+const lab = exports.lab = Lab.script();
+const expect = Code.expect;
+const describe = lab.describe;
+const it = lab.test;
 
 
-var internals = {};
+const internals = {};
 
 
 internals.prepareServer = function (options, callback) {
 
-    var server = new Hapi.Server();
-
-    var manifest = {
-        plugins: [
-            { '../': options },
-            { './plugins/blah.js': null },
-            { './plugins/main.js': null }
+    const manifest = {
+        registrations: [
+            { plugin: { register: '../', options: options } },
+            { plugin: { register:'./plugins/blah.js', options: null } },
+            { plugin: { register: './plugins/main.js', options: null } }
         ]
     };
 
-    Glue.compose(manifest, { relativeTo: __dirname }, function (err, server) {
+    Glue.compose(manifest, { relativeTo: __dirname }, (err, server) => {
 
         expect(err).to.not.exist();
         return callback(err, server);
@@ -39,82 +37,83 @@ internals.prepareServer = function (options, callback) {
 
 internals.makeResult = function (server) {
 
-    var result = {
+    const result = {
         server: {
             node: process.version,
-            hapi: '8.8.1',
+            hapi: server.version,
             host: server.info.host,
             port: server.info.port,
             uri: server.info.uri
         },
-        plugins: [{
-            name: 'hapi-info',
-            version: require('./../package.json').version
-        },
-        {
-            name: 'blah',
-            version: '1.2.3'
-        },
-        {
-            name: 'main',
-            version: '0.1.1'
-        }]
+        plugins: [
+            {
+                name: 'hapi-info',
+                version: require('./../package.json').version
+            },
+            {
+                name: 'blah',
+                version: '1.2.3'
+            },
+            {
+                name: 'main',
+                version: '0.1.1'
+            }
+        ]
     };
 
     return result;
 };
 
+describe('routes', () => {
 
-describe('routes', function () {
+    it('prints plugin and server information', (done) => {
 
-    it('prints plugin and server information', function (done) {
+        internals.prepareServer({}, (err, server) => {
 
-        internals.prepareServer({}, function (err, server) {
+            server.inject('/hapi-info', (res) => {
 
-            server.inject('/hapi-info', function (res) {
-
-                var result = internals.makeResult(server);
+                const result = internals.makeResult(server);
                 expect(res.result).to.deep.equal(result);
-                done();
+                done(err);
             });
         });
     });
 
-    it('prints plugin and server to a different path', function (done) {
+    it('prints plugin and server to a different path', (done) => {
 
-        internals.prepareServer({ path: '/foo' }, function (err, server) {
+        internals.prepareServer({ path: '/foo' }, (err, server) => {
 
-            server.inject('/foo', function (res) {
+            server.inject('/foo', (res) => {
 
-                var result = internals.makeResult(server);
+                const result = internals.makeResult(server);
                 expect(res.result).to.deep.equal(result);
-                done();
+                done(err);
             });
         });
     });
 
-    it('prints plugin and server info using expose', function (done) {
+    it('prints plugin and server info using expose', (done) => {
 
-        internals.prepareServer({ path: '/foo' }, function (err, server) {
+        internals.prepareServer({ path: '/foo' }, (err, server) => {
 
-            var info = server.plugins['hapi-info'].info();
-            var result = internals.makeResult(server);
+            const info = server.plugins['hapi-info'].info();
+            const result = internals.makeResult(server);
             expect(info).to.deep.equal(result);
-            done();
+            done(err);
         });
     });
 
-    it('setting path to null doesnt create route, but still exposes info data', function (done) {
+    it('setting path to null doesnt create route, but still exposes info data', (done) => {
 
-        internals.prepareServer({ path: null }, function (err, server) {
+        internals.prepareServer({ path: null }, (err, server) => {
 
-            server.inject('/hapi-info', function (res) {
+            server.inject('/hapi-info', (res) => {
 
                 expect(res.statusCode).to.equal(404);
-                var info = server.plugins['hapi-info'].info();
-                var result = internals.makeResult(server);
+                const info = server.plugins['hapi-info'].info();
+                const result = internals.makeResult(server);
                 expect(info).to.deep.equal(result);
-                done();
+                done(err);
             });
         });
     });

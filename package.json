@@ -1,10 +1,10 @@
 {
   "name": "hapi-info",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "lab -a code -v -t 100"
+    "test": "lab -a code -v -t 100 -L"
   },
   "repository": {
     "type": "git",
@@ -18,13 +18,15 @@
     "hapi-plugin"
   ],
   "devDependencies": {
-    "code": "1.x.x",
-    "glue": "2.x.x",
-    "hapi": "8.x.x",
-    "lab": "5.x.x"
+    "code": "2.x.x",
+    "glue": "3.x.x",
+    "lab": "8.x.x"
   },
   "dependencies": {
-    "hoek": "2.x.x",
-    "joi": "6.x.x"
+    "hoek": "3.x.x",
+    "joi": "7.x.x"
+  },
+  "peerDependencies": {
+    "hapi": "11.x.x - 12.x.x"
   }
 }
