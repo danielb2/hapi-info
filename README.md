@@ -1,7 +1,10 @@
+[![Build Status](https://travis-ci.org/danielb2/hapi-info.svg?branch=master)](https://travis-ci.org/danielb2/hapi-info)
+
 # hapi-info
 
 `hapi-info` is a plugin to display information about the hapi server and the
 plugins it's running.
+
 
 ### Usage
 
@@ -30,25 +33,25 @@ The following options are available:
 
 ``` javascript
 {
-    server: {
-        node: 'v0.10.39',
-        hapi: '8.8.1',
-        host: 'sanji.local',
-        port: 0,
-        uri: 'http://sanji.local'
+    "server":{
+        "node":"v4.2.6",
+        "hapi":"11.1.4",
+        "host":"inis",
+        "port":0,
+        "uri":"http://inis"
     },
-    plugins: [
+    "plugins":[
         {
-            name: 'hapi-info',
-            version: '1.0.0'
+            "name":"hapi-info",
+            "version":"2.0.0"
         },
         {
-            name: 'blah',
-            version: '1.2.3'
+            "name":"blah",
+            "version":"1.2.3"
         },
         {
-            name: 'main',
-            version: '0.1.1'
+            "name":"main",
+            "version":"0.1.1"
         }
     ]
 }
