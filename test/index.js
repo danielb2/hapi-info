@@ -1,6 +1,7 @@
 'use strict';
 // Load modules
 
+const Path = require('path');
 const Code = require('code');
 const Glue = require('glue');
 const Lab = require('lab');
@@ -43,7 +44,8 @@ internals.makeResult = function (server) {
             hapi: server.version,
             host: server.info.host,
             port: server.info.port,
-            uri: server.info.uri
+            uri: server.info.uri,
+            api: require(Path.join(process.cwd(), './package.json')).version
         },
         plugins: [
             {

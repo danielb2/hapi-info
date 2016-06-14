@@ -38,7 +38,8 @@ The following options are available:
         "hapi":"11.1.4",
         "host":"inis",
         "port":0,
-        "uri":"http://inis"
+        "uri":"http://inis",
+        "api": "2.1.18"
     },
     "plugins":[
         {
