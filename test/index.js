@@ -64,6 +64,27 @@ internals.makeResult = function (server) {
     return result;
 };
 
+internals.makeFilteredResult = function (server) {
+
+    const result = {
+        server: {
+            node: process.version,
+            hapi: server.version,
+            host: server.info.host,
+            port: server.info.port,
+            uri: server.info.uri
+        },
+        plugins: [
+            {
+                name: 'hapi-info',
+                version: require('./../package.json').version
+            }
+        ]
+    };
+
+    return result;
+};
+
 describe('routes', () => {
 
     it('prints plugin and server information', (done) => {
@@ -115,6 +136,28 @@ describe('routes', () => {
                 expect(info).to.deep.equal(result);
                 done(err);
             });
+        });
+    });
+
+    it('returned plugins can be filtered', (done) => {
+
+        internals.prepareServer({ path: null, pluginFilter: '^(?!hapi)' }, (err, server) => {
+
+            const info = server.plugins['hapi-info'].info();
+            const result = internals.makeFilteredResult(server);
+            expect(info).to.deep.equal(result);
+            done(err);
+        });
+    });
+
+    it('setting no plugin filter returns all plugins', (done) => {
+
+        internals.prepareServer({ path: null }, (err, server) => {
+
+            const info = server.plugins['hapi-info'].info();
+            const result = internals.makeResult(server);
+            expect(info).to.deep.equal(result);
+            done(err);
         });
     });
 });
