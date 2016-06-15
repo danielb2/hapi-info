@@ -149,4 +149,15 @@ describe('routes', () => {
             done(err);
         });
     });
+
+    it('setting no plugin filter returns all plugins', (done) => {
+
+        internals.prepareServer({ path: null }, (err, server) => {
+
+            const info = server.plugins['hapi-info'].info();
+            const result = internals.makeResult(server);
+            expect(info).to.deep.equal(result);
+            done(err);
+        });
+    });
 });
