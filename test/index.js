@@ -141,7 +141,7 @@ describe('routes', () => {
 
     it('returned plugins can be filtered', (done) => {
 
-        internals.prepareServer({ path: null, pluginFilter: '^hapi.*' }, (err, server) => {
+        internals.prepareServer({ path: null, pluginFilter: '^(?!hapi)' }, (err, server) => {
 
             const info = server.plugins['hapi-info'].info();
             const result = internals.makeFilteredResult(server);

@@ -27,7 +27,7 @@ server.register({ register: HapiInfo, options: {} }, function (err) {
 The following options are available:
 
 * `path`: The route path where the information is available. Default: `/hapi-info`. Setting path to `null` means a route is not created but the server function is still [exposed].
-* `pluginFilter`: A RegExp used to filter the list of returned plugins. Default: `.*`.
+* `pluginFilter`: A RegExp used to filter out plugins from the returned information.
 
 
 ### Output example
