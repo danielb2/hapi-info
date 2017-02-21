@@ -100,6 +100,30 @@ describe('routes', () => {
         });
     });
 
+/*
+    it('prints plugin and server to a different path with auth', (done) => {
+
+        internals.prepareServer(
+            {
+                auth: {
+                    strategy: 'password',
+                    mode: 'required',
+                },
+                path: '/foo'
+            },
+            (err, server) => {
+
+                server.inject('/foo', (res) => {
+
+                    const result = internals.makeResult(server);
+                    expect(res.result).to.deep.equal(result);
+                    done(err);
+                });
+            }
+        );
+    });
+*/
+
     it('prints plugin and server to a different path', (done) => {
 
         internals.prepareServer({ path: '/foo' }, (err, server) => {
