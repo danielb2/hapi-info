@@ -21,7 +21,7 @@ internals.prepareServer = function (options, callback) {
 
     const manifest = {
         registrations: [
-            { plugin: { register: '../', options: options } },
+            { plugin: { register: '../', options } },
             { plugin: { register:'./plugins/blah.js', options: null } },
             { plugin: { register: './plugins/main.js', options: null } }
         ]
