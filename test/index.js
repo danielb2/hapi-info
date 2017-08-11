@@ -113,6 +113,22 @@ describe('routes', () => {
         });
     });
 
+    it('prints plugin and option information', (done) => {
+
+        internals.prepareServer({ options: true }, (err, server) => {
+
+            server.inject('/hapi-info', (res) => {
+
+                const result = internals.makeResult(server);
+                result.plugins[0].options = { options: true };
+                result.plugins[1].options = null;
+                result.plugins[2].options = null;
+                expect(res.result).to.equal(result);
+                done(err);
+            });
+        });
+    });
+
     it('prints plugin and server info using expose', (done) => {
 
         internals.prepareServer({ path: '/foo' }, (err, server) => {

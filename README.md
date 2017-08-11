@@ -28,6 +28,7 @@ The following options are available:
 
 * `path`: The route path where the information is available. Default: `/hapi-info`. Setting path to `null` means a route is not created but the server function is still [exposed].
 * `pluginFilter`: A RegExp used to filter out plugins from the returned information.
+* `options`: boolean. default: false. when turned on, the options passed to the plugin will also be displayed
 
 
 ### Output example
