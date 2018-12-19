@@ -35,28 +35,46 @@ The following options are available:
 
 ``` javascript
 {
-    "server":{
-        "node":"v4.2.6",
-        "hapi":"11.1.4",
-        "host":"inis",
-        "port":0,
-        "uri":"http://inis"
+    server: {
+        node: 'v6.14.3',
+        hapi: '16.7.0',
+        info: {
+            created: 1545253617087,
+            started: 0,
+            host: 'sanji.local',
+            port: 0,
+            protocol: 'http',
+            id: 'sanji.local:17557:jpvo3ttr',
+            uri: 'http://sanji.local'
+        },
+        uptime: 2.501,
+        memoryUsage: {
+            rss: 68087808,
+            heapTotal: 59801600,
+            heapUsed: 29752280,
+            external: 41684
+        },
+        cpuUsage: {
+            user: 1489450,
+            system: 186843
+        }
     },
-    "plugins":[
+    plugins: [
         {
-            "name":"hapi-info",
-            "version":"2.0.0"
+            name: 'hapi-info',
+            version: '2.0.6'
         },
         {
-            "name":"blah",
-            "version":"1.2.3"
+            name: 'blah',
+            version: '1.2.3'
         },
         {
-            "name":"main",
-            "version":"0.1.1"
+            name: 'main',
+            version: '0.1.1'
         }
     ]
 }
+
 ```
 
 
