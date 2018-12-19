@@ -35,56 +35,6 @@ internals.prepareServer = function (options, callback) {
 };
 
 
-internals.makeResult = function (server) {
-
-    const result = {
-        server: {
-            node: process.version,
-            hapi: server.version,
-            host: server.info.host,
-            port: server.info.port,
-            uri: server.info.uri
-        },
-        plugins: [
-            {
-                name: 'hapi-info',
-                version: require('./../package.json').version
-            },
-            {
-                name: 'blah',
-                version: '1.2.3'
-            },
-            {
-                name: 'main',
-                version: '0.1.1'
-            }
-        ]
-    };
-
-    return result;
-};
-
-internals.makeFilteredResult = function (server) {
-
-    const result = {
-        server: {
-            node: process.version,
-            hapi: server.version,
-            host: server.info.host,
-            port: server.info.port,
-            uri: server.info.uri
-        },
-        plugins: [
-            {
-                name: 'hapi-info',
-                version: require('./../package.json').version
-            }
-        ]
-    };
-
-    return result;
-};
-
 describe('routes', () => {
 
     it('prints plugin and server information', (done) => {
@@ -93,8 +43,13 @@ describe('routes', () => {
 
             server.inject('/hapi-info', (res) => {
 
-                const result = internals.makeResult(server);
-                expect(res.result).to.equal(result);
+                expect(res.statusCode).to.equal(200);
+                expect(res.result.server.node).to.equal(process.version);
+                expect(res.result.server.hapi).to.equal(server.version);
+                expect(res.result.server.info).to.equal(server.info);
+                expect(res.result.server.uptime).to.be.about(1,2);
+                expect(res.result.server.memoryUsage).to.be.an.object();
+                expect(res.result.server.cpuUsage).to.be.an.object();
                 done(err);
             });
         });
@@ -106,8 +61,13 @@ describe('routes', () => {
 
             server.inject('/foo', (res) => {
 
-                const result = internals.makeResult(server);
-                expect(res.result).to.equal(result);
+                expect(res.statusCode).to.equal(200);
+                expect(res.result.server.node).to.equal(process.version);
+                expect(res.result.server.hapi).to.equal(server.version);
+                expect(res.result.server.info).to.equal(server.info);
+                expect(res.result.server.uptime).to.be.about(1,2);
+                expect(res.result.server.memoryUsage).to.be.an.object();
+                expect(res.result.server.cpuUsage).to.be.an.object();
                 done(err);
             });
         });
@@ -119,11 +79,18 @@ describe('routes', () => {
 
             server.inject('/hapi-info', (res) => {
 
-                const result = internals.makeResult(server);
-                result.plugins[0].options = { options: true };
-                result.plugins[1].options = null;
-                result.plugins[2].options = null;
-                expect(res.result).to.equal(result);
+                expect(res.statusCode).to.equal(200);
+                const info = server.plugins['hapi-info'].info();
+                expect(info.plugins[0].options).to.equal({ options: true });
+                expect(res.result.plugins[0].options).to.equal({ options: true });
+                expect(res.result.plugins[1].options).to.equal(null);
+                expect(res.result.plugins[2].options).to.equal(null);
+                expect(res.result.server.node).to.equal(process.version);
+                expect(res.result.server.hapi).to.equal(server.version);
+                expect(res.result.server.info).to.equal(server.info);
+                expect(res.result.server.uptime).to.be.about(1,2);
+                expect(res.result.server.memoryUsage).to.be.an.object();
+                expect(res.result.server.cpuUsage).to.be.an.object();
                 done(err);
             });
         });
@@ -134,8 +101,13 @@ describe('routes', () => {
         internals.prepareServer({ path: '/foo' }, (err, server) => {
 
             const info = server.plugins['hapi-info'].info();
-            const result = internals.makeResult(server);
-            expect(info).to.equal(result);
+            expect(info.plugins[0].options).to.not.exist();
+            expect(info.server.node).to.equal(process.version);
+            expect(info.server.hapi).to.equal(server.version);
+            expect(info.server.info).to.equal(server.info);
+            expect(info.server.uptime).to.be.about(1,2);
+            expect(info.server.memoryUsage).to.be.an.object();
+            expect(info.server.cpuUsage).to.be.an.object();
             done(err);
         });
     });
@@ -148,8 +120,7 @@ describe('routes', () => {
 
                 expect(res.statusCode).to.equal(404);
                 const info = server.plugins['hapi-info'].info();
-                const result = internals.makeResult(server);
-                expect(info).to.equal(result);
+                expect(info.server.node).to.equal(process.version);
                 done(err);
             });
         });
@@ -160,8 +131,8 @@ describe('routes', () => {
         internals.prepareServer({ path: null, pluginFilter: '^(?!hapi)' }, (err, server) => {
 
             const info = server.plugins['hapi-info'].info();
-            const result = internals.makeFilteredResult(server);
-            expect(info).to.equal(result);
+            expect(info.plugins.length).to.equal(1);
+            expect(info.plugins[0].name).to.equal('hapi-info');
             done(err);
         });
     });
@@ -171,8 +142,8 @@ describe('routes', () => {
         internals.prepareServer({ path: null }, (err, server) => {
 
             const info = server.plugins['hapi-info'].info();
-            const result = internals.makeResult(server);
-            expect(info).to.equal(result);
+            expect(info.plugins.length).to.equal(3);
+            expect(info.plugins[0].name).to.equal('hapi-info');
             done(err);
         });
     });
