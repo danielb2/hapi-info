@@ -4,7 +4,8 @@
   "description": "A hapi plugin to display information about the hapi server and the plugins it's running.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "lab -a code -v -t 100 -L"
+    "fix": "eslint . --fix",
+    "test": "lab -a @hapi/code -v -t 100 -L"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,12 @@
     "hapi-plugin"
   ],
   "devDependencies": {
-    "code": "^4.1.0",
-    "glue": "^4.2.1",
-    "lab": "^14.3.4"
+    "@hapi/code": "^5.3.1",
+    "@hapi/glue": "^5.1.0",
+    "@hapi/lab": "^18.1.1"
   },
   "dependencies": {
-    "hoek": "^6.1.2",
-    "joi": "10.x.x"
+    "@hapi/hoek": "^6.2.1",
+    "@hapi/joi": "^15.1.0"
   }
 }
