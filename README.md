@@ -10,16 +10,23 @@ plugins it's running.
 
 ``` javascript
 var HapiInfo = require('hapi-info');
-var Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 
-var server = new Hapi.Server();
-server.connection();
-
-server.register({ register: HapiInfo, options: {} }, function (err) {
-    server.start(function () {
-        // ..
+const init = async () => {
+    const server = Hapi.server({
+        port: 3000,
+        host: 'localhost'
     });
+    await server.register({ plugin: HapiInfo });
+    await server.start();
+    console.log('Server running on %s', server.info.uri);
+};
+
+process.on('unhandledRejection', (err) => {
+    process.exit(1);
 });
+
+init();
 ```
 
 ### Options
@@ -36,8 +43,8 @@ The following options are available:
 ``` javascript
 {
     server: {
-        node: 'v6.14.3',
-        hapi: '16.7.0',
+        node: 'v10.15.3',
+        hapi: '17.9.0',
         info: {
             created: 1545253617087,
             started: 0,
