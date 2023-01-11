@@ -19,7 +19,7 @@
   ],
   "devDependencies": {
     "@hapi/code": "^5.3.1",
-    "@hapi/glue": "^5.1.0",
+    "@hapi/glue": "^9.0.0",
     "@hapi/lab": "^18.1.1"
   },
   "dependencies": {
